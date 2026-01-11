@@ -8,7 +8,7 @@ $pass = "12345";
 $pass1 = "satya";
 $pass2 = "shiv";
 
-if($_POST['username'] == $user || $user1 || $user2  && $_POST['password'] == $pass || $pass1 || $pass2){
+if($_POST['username'] == ($user || $user1 || $user2)  && $_POST['password'] == ($pass || $pass1 || $pass2)){
     $_SESSION['user'] = $user;
     header("Location: dashboard.php");
 } else {
