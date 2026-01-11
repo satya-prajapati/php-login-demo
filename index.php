@@ -3,103 +3,135 @@ require "config.php";
 
 $error = "";
 
+// Agar already login hai, redirect to dashboard
 if (isset($_SESSION['user'])) {
     header("Location: dashboard.php");
     exit;
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Form submit check
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    $stmt = mysqli_prepare($conn, "SELECT password FROM users WHERE username = ?");
-    mysqli_stmt_bind_param($stmt, "s", $username);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_store_result($stmt);
+    // PDO prepared statement
+    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
+    $stmt->execute([$username]);
+    $user = $stmt->fetch();
 
-    if (mysqli_stmt_num_rows($stmt) == 1) {
-        mysqli_stmt_bind_result($stmt, $hash);
-        mysqli_stmt_fetch($stmt);
-
-        if (password_verify($password, $hash)) {
-            $_SESSION['user'] = $username;
-            header("Location: dashboard.php");
-            exit;
-        }
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['user'] = $username;
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        $error = "Invalid username or password";
     }
-    $error = "Invalid username or password";
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f4f6f8;
-        }
-        .box{
-            width:350px;
-            margin:100px auto;
-            background:#fff;
-            padding:25px;
-            border-radius:8px;
-            box-shadow:0 0 10px rgba(0,0,0,0.1);
-        }
-        h2{
-            text-align:center;
-            margin-bottom:20px;
-        }
-        input{
-            width:100%;
-            padding:10px;
-            margin:8px 0;
-            border:1px solid #ccc;
-            border-radius:5px;
-        }
-        button{
-            width:100%;
-            padding:10px;
-            background:#007bff;
-            border:none;
-            color:white;
-            font-size:16px;
-            border-radius:5px;
-            cursor:pointer;
-        }
-        button:hover{
-            background:#0056b3;
-        }
-        .links{
-            margin-top:15px;
-            text-align:center;
-        }
-        .links a{
-            text-decoration:none;
-            color:#007bff;
-            margin:0 5px;
-        }
-        .error{
-            color:red;
-            text-align:center;
-            margin-bottom:10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Dizihal</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:0;
+}
+.login-box{
+    background:#fff;
+    padding:30px;
+    width:100%;
+    max-width:380px;
+    border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+.login-box h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+.input-group{
+    margin-bottom:15px;
+}
+.input-group label{
+    font-size:14px;
+    color:#555;
+}
+.input-group input{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border-radius:5px;
+    border:1px solid #ccc;
+    outline:none;
+}
+.input-group input:focus{
+    border-color:#667eea;
+}
+button{
+    width:100%;
+    padding:12px;
+    background:#667eea;
+    color:#fff;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+button:hover{
+    background:#5a67d8;
+}
+.error{
+    background:#ffe6e6;
+    color:#c53030;
+    padding:10px;
+    border-radius:5px;
+    margin-bottom:15px;
+    text-align:center;
+    font-size:14px;
+}
+.links{
+    text-align:center;
+    margin-top:10px;
+}
+.links a{
+    color:#667eea;
+    text-decoration:none;
+    margin:0 8px;
+}
+.links a:hover{
+    text-decoration:underline;
+}
+</style>
 </head>
 <body>
 
-<div class="box">
-    <h2>Login</h2>
+<div class="login-box">
+    <h2>Admin Login</h2>
 
     <?php if($error): ?>
-        <div class="error"><?= $error ?></div>
+        <div class="error"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
     <form method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter username" required>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter password" required>
+        </div>
+
         <button type="submit">Login</button>
     </form>
 
