@@ -1,0 +1,27 @@
+{
+  "success": true,
+  "message": "Products retrieved successfully",
+  "data": [
+    {
+      "id": 1,
+      "style_code": "STYLE001",
+      "product_type": "T-Shirt",
+      "color": "Blue",
+      "sizes": ["S", "M", "L", "XL", "XXL"]
+    },
+    {
+      "id": 2,
+      "style_code": "STYLE002",
+      "product_type": "Polo Shirt",
+      "color": "Red",
+      "sizes": ["M", "L", "XL"]
+    },
+    {
+      "id": 3,
+      "style_code": "STYLE003",
+      "product_type": "Jeans",
+      "color": "Black",
+      "sizes": ["28", "30", "32", "34", "36"]
+    }
+  ]
+}
