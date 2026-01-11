@@ -1,20 +1,13 @@
-// <?php
-// $conn = mysqli_connect("DB_HOST","DB_USER","DB_PASS","DB_NAME");
-// if(!$conn){ die("DB Error"); }
-// session_start();
-// date_default_timezone_set("Asia/Kolkata");
-// ?>
-
-
 <?php
-$host = "DB_HOST";
-$db   = "DB_NAME";
-$user = "DB_USER";
-$pass = "DB_PASS";
+$host = "dpg-d5hp0cmmcj7s73b5pps0-a";
+$port = "5432";
+$db   = "dizihal_db";
+$user = "dizihal_db_user";
+$pass = "45GRDBPK4V2bh2MIxra1KV0RIuLxBAzE";
 
 try {
     $conn = new PDO(
-        "mysql:host=$host;dbname=$db;charset=utf8",
+        "pgsql:host=$host;port=$port;dbname=$db",
         $user,
         $pass,
         [
@@ -23,7 +16,7 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    die("Database connection failed");
+    die("Database connection failed: " . $e->getMessage());
 }
 
 session_start();
