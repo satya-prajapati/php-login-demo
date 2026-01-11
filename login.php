@@ -9,7 +9,8 @@ $pass1 = "satya";
 $pass2 = "shiv";
 
 if($_POST['username'] == ($user || $user1 || $user2)  && $_POST['password'] == ($pass || $pass1 || $pass2)){
-    $_SESSION['user'] = $user;
+    //$_SESSION['user'] = $user;
+    $_SESSION['user'] = $_POST['username'];
     header("Location: dashboard.php");
 } else {
     echo "Invalid Login <a href='index.php'>Try Again</a>";
