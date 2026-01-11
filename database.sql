@@ -1,0 +1,8 @@
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) UNIQUE,
+  password VARCHAR(255),
+  reset_token VARCHAR(255),
+  token_expiry DATETIME,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
