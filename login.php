@@ -16,3 +16,4 @@ if($_POST['username'] == ($user || $user1 || $user2)  && $_POST['password'] == (
     echo "Invalid Login <a href='index.php'>Try Again</a>";
 }
 ?>
+<a href="forgot_password.php">Forgot Password?</a>
