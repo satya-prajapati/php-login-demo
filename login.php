@@ -1,9 +1,14 @@
 <?php
 session_start();
 $user = "admin";
-$pass = "12345";
+$user1 = "satya";
+$user2 = "shiv";
 
-if($_POST['username'] == $user && $_POST['password'] == $pass){
+$pass = "12345";
+$pass1 = "satya";
+$pass2 = "shiv";
+
+if($_POST['username'] == $user || $user1 || $user2  && $_POST['password'] == $pass || $pass1 || $pass2){
     $_SESSION['user'] = $user;
     header("Location: dashboard.php");
 } else {
