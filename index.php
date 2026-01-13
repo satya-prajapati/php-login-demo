@@ -5,7 +5,7 @@
     <title>Product Upload</title>
 </head>
 <body>
-    <h1>Upload Excel Sheet for Products</h1>
+    <h1>Upload Excel Sheet for Products updated at 10:32</h1>
     <form action="upload.php" method="post" enctype="multipart/form-data">
         <input type="file" name="excel_file" accept=".xlsx,.xls,.csv" required>
         <button type="submit">Upload</button>
