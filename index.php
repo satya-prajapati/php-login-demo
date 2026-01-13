@@ -14,7 +14,7 @@
     <a href="crud.php">Manage Products</a>
 </body>
 </html>
-// <?php
+/*// <?php
 // require "config.php";
 
 // $error = "";
@@ -158,4 +158,4 @@
 // </div>
 
 // </body>
-// </html>
+// </html>*/
